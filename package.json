@@ -24,7 +24,7 @@
     "uglify-js": "~2.8.5"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS"
+    "test": "gulp test"
   },
   "description": "Parses user-agent to set css classes or directly usable via JS / NodeJS.",
   "main": "index.js",

@@ -129,3 +129,10 @@ if (typeof module !== 'undefined') {
         CUSTOM_DETECTION_TESTS: CUSTOM_DETECTION_TESTS
     };
 }
+
+if (typeof window !== 'undefined') {
+    window.common = {
+        USER_AGENTS_TESTS: USER_AGENTS_TESTS,
+        CUSTOM_DETECTION_TESTS: CUSTOM_DETECTION_TESTS
+    };
+}

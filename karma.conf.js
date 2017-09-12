@@ -12,6 +12,7 @@ module.exports = function (config) {
             'node_modules/angular-mocks/angular-mocks.js',
             'node_modules/re-tree/re-tree.js',
             'ua-device-detector.js',
+            'test/common.js',
             'test/client.js'
         ],
 
