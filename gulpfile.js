@@ -33,4 +33,4 @@ gulp.task('test-server', function () {
 
 gulp.task('watch', [], function () {
     gulp.watch(["**/*.js"], ["test", "minify"]);
-});
+})
