@@ -1,4 +1,6 @@
 var USER_AGENTS_TESTS = [
+    // [userAgent, os, os_version, browser, browser_version, device, isMobile, isTablet, isDesktop, extras]
+
     // Chrome
     ["Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36", "windows", "windows-8-1", "chrome", "37.0.2049.0", "unknown", false, false, true],
     ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1664.3 Safari/537.36", "mac", "mac-os-x-9", "chrome", "32.0.1664.3", "unknown", false, false, true],
@@ -111,8 +113,10 @@ var USER_AGENTS_TESTS = [
                 var deviceInfo = uaDeviceDetector.parseUserAgent(userAgent);
                 expect(deviceInfo.raw.browser.safari).toBe(false);
             });
-        }]
+        }],
 
+    // Issue 61
+    ["Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome Safari/537.36", "linux", "unknown", "chrome", "537.36", "unknown", false, false, true],
 ];
 
 var CUSTOM_DETECTION_TESTS = [
