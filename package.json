@@ -21,10 +21,12 @@
     "karma-nested-reporter": "~0.1.4",
     "karma-phantomjs-launcher": "~1.0.2",
     "phantomjs": "~2.1.7",
+    "standard-version": "^4.3.0",
     "uglify-js": "~2.8.5"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "release": "node_modules/standard-version/bin/cli.js"
   },
   "description": "Parses user-agent to set css classes or directly usable via JS / NodeJS.",
   "main": "index.js",
