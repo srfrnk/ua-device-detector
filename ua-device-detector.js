@@ -47,6 +47,9 @@
         UNKNOWN: "unknown"
     };
 
+    /**
+    * @deprecated Will be deleted in future versions. OS versions will not be list-hardcoded.
+    */
     var OS_VERSIONS = {
         WINDOWS_3_11: "windows-3-11",
         WINDOWS_95: "windows-95",
@@ -126,7 +129,10 @@
         VITA: /\bMozilla\/5.0 \(Play(S|s)tation Vita\b/
     };
 
-    var OS_VERSIONS_RE = {
+    /**
+    * @deprecated Will be deleted in future versions. OS versions will not be list-hardcoded.
+    */
+    var OS_VERSIONS_RE_OLD = {
         WINDOWS_3_11: /Win16/,
         WINDOWS_95: /(Windows 95|Win95|Windows_95)/,
         WINDOWS_ME: /(Win 9x 4.90|Windows ME)/,
@@ -159,6 +165,57 @@
         MACOSX_14: /(Mac OS X 10.14)/,
         MACOSX_15: /(Mac OS X 10.15)/
     };
+
+    var OS_VERSIONS_RE_MAP = {
+        WINDOWS: [
+            {re:/Win16/,map:"windows-3-11"},
+            {re:/(Windows 95|Win95|Windows_95)/,map:"windows-95"},
+            {re:/(Win 9x 4.90|Windows ME)/,map:"windows-me"},
+            {re:/(Windows 98|Win98)/,map:"windows-98"},
+            {re:/Windows CE/,map:"windows-ce"},
+            {re:/(Windows NT 5.0|Windows 2000)/,map:"windows-2000"},
+            {re:/(Windows NT 5.1|Windows XP)/,map:"windows-xp"},
+            {re:/Windows NT 5.2/,map:"windows-server-2003"},
+            {re:/Windows NT 6.0/,map:"windows-vista"},
+            {re:/(Windows 7|Windows NT 6.1)/,map:"windows-7"},
+            {re:/(Windows 8.1|Windows NT 6.3)/,map:"windows-8-1"},
+            {re:/(Windows 8|Windows NT 6.2)/,map:"windows-8"},
+            {re:/(Windows NT 10.0)/,map:"windows-10"},
+            {re:{ and: [/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/, { not: /Windows NT 10.0/ }] },map:"windows-nt-4-0"},
+        ],
+        WINDOWS_PHONE:[
+            {re:/(Windows Phone OS 7.5)/,map:"windows-phone-7-5"},
+            {re:/(Windows Phone 8.1)/,map:"windows-phone-8-1"},
+            {re:/(Windows Phone 10)/,map:"windows-phone-10"},
+        ],
+        MAC:[
+            { re: /(MAC OS X\s*[^ 0-9])/, map: 'mac-os-x' },
+            { re: /(Darwin 10.3|Mac OS X 10.3)/, map: 'mac-os-x-3' },
+            { re: /(Darwin 10.4|Mac OS X 10.4)/, map: 'mac-os-x-4' },
+            { re: /(Mac OS X 10.5)/, map: 'mac-os-x-5' },
+            { re: /(Mac OS X 10.6)/, map: 'mac-os-x-6' },
+            { re: /(Mac OS X 10.7)/, map: 'mac-os-x-7' },
+            { re: /(Mac OS X 10.8)/, map: 'mac-os-x-8' },
+            { re: /(Mac OS X 10.9)/, map: 'mac-os-x-9' },
+            { re: /(Mac OS X 10.10)/, map: 'mac-os-x-10' },
+            { re: /(Mac OS X 10.11)/, map: 'mac-os-x-11' },
+            { re: /(Mac OS X 10.12)/, map: 'mac-os-x-12' },
+            { re: /(Mac OS X 10.13)/, map: 'mac-os-x-13' },
+            { re: /(Mac OS X 10.14)/, map: 'mac-os-x-14' },
+            { re: /(Mac OS X 10.15)/, map: 'mac-os-x-15' }
+        ],
+        IOS:[
+            { re: /OS ([\d_\-.]+)/, map: function(match){return match.replace(/_/g,'.');} }
+        ],
+        ANDROID:[
+            { re: /Android ([\d.]+)/, map: function(match){return match;} }
+        ]
+    };
+
+    var OS_VERSIONS_RE = Object.keys(OS_VERSIONS_RE_MAP).reduce(function (obj, key) {
+        obj[OS[key]] = OS_VERSIONS_RE_MAP[key];
+        return obj;
+    }, {});
 
     var BROWSER_VERSIONS_RE_MAP = {
         CHROME: [/\bChrome\/([\d\.]+)\b/, /\bCriOS\/([\d\.]+)\b/,/\bHeadlessChrome Safari\/([\d\.]+)\b/],
@@ -250,6 +307,51 @@
             return value;
         };
     }
+    
+// https://tc39.github.io/ecma262/#sec-array.prototype.find
+    if (!Array.prototype.find) {
+        Object.defineProperty(Array.prototype, "find", {
+            value: function(predicate) {
+                // 1. Let O be ? ToObject(this value).
+                if (this == null) {
+                    throw new TypeError('"this" is null or not defined');
+                }
+
+                var o = Object(this);
+
+                // 2. Let len be ? ToLength(? Get(O, "length")).
+                var len = o.length >>> 0;
+
+                // 3. If IsCallable(predicate) is false, throw a TypeError exception.
+                if (typeof predicate !== "function") {
+                    throw new TypeError("predicate must be a function");
+                }
+
+                // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+                var thisArg = arguments[1];
+
+                // 5. Let k be 0.
+                var k = 0;
+
+                // 6. Repeat, while k < len
+                while (k < len) {
+                    // a. Let Pk be ! ToString(k).
+                    // b. Let kValue be ? Get(O, Pk).
+                    // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
+                    // d. If testResult is true, return kValue.
+                    var kValue = o[k];
+                    if (predicate.call(thisArg, kValue, k, o)) {
+                        return kValue;
+                    }
+                    // e. Increase k by 1.
+                    k++;
+                }
+
+                // 7. Return undefined.
+                return undefined;
+            }
+        });
+    }    
     /* ES5 polyfills End*/
 
     function parseUserAgent(options) {
@@ -267,7 +369,7 @@
         };
 
         deviceInfo.raw.os = Object.keys(OS).reduce(function (obj, item) {
-            obj[OS[item]] = reTree.test(ua, OS_RE[item]);
+            obj[OS[item]]  = reTree.test(ua, OS_RE[item]);
             return obj;
         }, {});
 
@@ -282,7 +384,7 @@
         }, {});
 
         deviceInfo.raw.os_version = Object.keys(OS_VERSIONS).reduce(function (obj, item) {
-            obj[OS_VERSIONS[item]] = reTree.test(ua, OS_VERSIONS_RE[item]);
+            obj[OS_VERSIONS[item]] = reTree.test(ua, OS_VERSIONS_RE_OLD[item]);
             return obj;
         }, {});
 
@@ -330,42 +432,35 @@
         ].reduce(function (previousValue, currentValue) {
             return (previousValue === DEVICES.UNKNOWN && deviceInfo.raw.device[currentValue]) ? currentValue : previousValue;
         }, DEVICES.UNKNOWN);
-
-        deviceInfo.os_version = [
-            OS_VERSIONS.WINDOWS_3_11,
-            OS_VERSIONS.WINDOWS_95,
-            OS_VERSIONS.WINDOWS_ME,
-            OS_VERSIONS.WINDOWS_98,
-            OS_VERSIONS.WINDOWS_CE,
-            OS_VERSIONS.WINDOWS_2000,
-            OS_VERSIONS.WINDOWS_XP,
-            OS_VERSIONS.WINDOWS_SERVER_2003,
-            OS_VERSIONS.WINDOWS_VISTA,
-            OS_VERSIONS.WINDOWS_7,
-            OS_VERSIONS.WINDOWS_8_1,
-            OS_VERSIONS.WINDOWS_8,
-            OS_VERSIONS.WINDOWS_10,
-            OS_VERSIONS.WINDOWS_PHONE_7_5,
-            OS_VERSIONS.WINDOWS_PHONE_8_1,
-            OS_VERSIONS.WINDOWS_PHONE_10,
-            OS_VERSIONS.WINDOWS_NT_4_0,
-            OS_VERSIONS.MACOSX,
-            OS_VERSIONS.MACOSX_3,
-            OS_VERSIONS.MACOSX_4,
-            OS_VERSIONS.MACOSX_5,
-            OS_VERSIONS.MACOSX_6,
-            OS_VERSIONS.MACOSX_7,
-            OS_VERSIONS.MACOSX_8,
-            OS_VERSIONS.MACOSX_9,
-            OS_VERSIONS.MACOSX_10,
-            OS_VERSIONS.MACOSX_11,
-            OS_VERSIONS.MACOSX_12,
-            OS_VERSIONS.MACOSX_13,
-            OS_VERSIONS.MACOSX_14,
-            OS_VERSIONS.MACOSX_15
-        ].reduce(function (previousValue, currentValue) {
-            return (previousValue === OS_VERSIONS.UNKNOWN && deviceInfo.raw.os_version[currentValue]) ? currentValue : previousValue;
-        }, OS_VERSIONS.UNKNOWN);
+        
+        deviceInfo.os_version = "unknown";
+        if (deviceInfo.os !== OS.UNKNOWN) {
+            var version = (OS_VERSIONS_RE[deviceInfo.os]||[])
+                .map(function(reMap){
+                    var res=reTree.exec(ua, reMap.re);
+                    if(!!res)
+                    {
+                        if(typeof reMap.map === 'string' || reMap.map instanceof String)
+                        {
+                            return reMap.map;
+                        }
+                        else 
+                        {
+                            return reMap.map.call(null,res[1]);
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                })
+                .find(function(element){
+                    return !!element;
+                });
+            if (!!version) {
+                deviceInfo.os_version = version;
+            }
+        }
 
         deviceInfo.browser_version = "0";
         if (deviceInfo.browser !== BROWSERS.UNKNOWN) {
@@ -423,7 +518,7 @@
             .constant("OS_RE", OS_RE)
             .constant("BROWSERS_RE", BROWSERS_RE)
             .constant("DEVICES_RE", DEVICES_RE)
-            .constant("OS_VERSIONS_RE", OS_VERSIONS_RE)
+            .constant("OS_VERSIONS_RE", OS_VERSIONS_RE_OLD)
             .constant("BROWSER_VERSIONS_RE_MAP", BROWSER_VERSIONS_RE_MAP)
             .constant("BROWSER_VERSIONS_RE", BROWSER_VERSIONS_RE)
             .constant("BROWSERS", BROWSERS)
