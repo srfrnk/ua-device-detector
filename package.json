@@ -17,6 +17,7 @@
     "jasmine-core": "~2.5.2",
     "jasmine-node": "^1.14.5",
     "karma": "~1.5.0",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.1",
     "karma-nested-reporter": "~0.1.4",
     "karma-phantomjs-launcher": "~1.0.2",
@@ -45,6 +46,6 @@
   },
   "homepage": "https://github.com/srfrnk/ua-device-detector",
   "dependencies": {
-    "re-tree": "~0.0.2"
+    "re-tree": "^0.1.7"
   }
 }
