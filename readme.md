@@ -31,6 +31,24 @@ To use from angular:
 
 **Don't** - Instead use ng-device-detector :)
 
+Usage with `Webpack`:
+
+An issue with webpack might cause an error like this:
+```diff
+- Critical dependency: require function is used in a way in which dependencies cannot be statically extracted
+```
+
+To solve add this to your `webpack.config.js`:
+```js
+module.exports = {
+    module: {
+        unknownContextCritical:false,
+    }
+}
+```
+
+More details [here](https://github.com/AnalyticalGraphicsInc/cesium/issues/4876)
+
 ### API
 
 parseUserAgent options specification:
