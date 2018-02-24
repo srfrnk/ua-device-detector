@@ -28,7 +28,7 @@
   "scripts": {
     "test": "gulp test",
     "release": "node_modules/standard-version/bin/cli.js",
-    "publish": "(git push --follow-tags origin master) && (npm publish)"
+    "publish-version": "(git push --follow-tags origin master) && (npm publish)"
   },
   "description": "Parses user-agent to set css classes or directly usable via JS / NodeJS.",
   "main": "index.js",
