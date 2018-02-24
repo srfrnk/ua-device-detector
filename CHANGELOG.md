@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/srfrnk/ua-device-detector/compare/v1.1.0...v1.1.1) (2018-02-24)
+
+
+### Bug Fixes
+
+* Issue [#3](https://github.com/srfrnk/ua-device-detector/issues/3) - notice [@deprecated](https://github.com/deprecated) features - next versions will NOT have hardcoded OS version strings ([e0a9a9b](https://github.com/srfrnk/ua-device-detector/commit/e0a9a9b))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/srfrnk/ua-device-detector/compare/v1.0.1...v1.1.0) (2018-02-17)
 
