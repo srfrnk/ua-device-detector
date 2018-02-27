@@ -2,6 +2,17 @@
 ##
 
 [![Build Status](https://travis-ci.org/srfrnk/ua-device-detector.svg?branch=master)](https://travis-ci.org/srfrnk/ua-device-detector)
+[![GitHub issues](https://img.shields.io/github/issues/srfrnk/ua-device-detector.svg)](https://github.com/srfrnk/ua-device-detector/issues)
+[![Known Vulnerabilities](https://snyk.io/package/npm/ua-device-detector/badge.svg)](https://snyk.io/package/npm/ua-device-detector)
+[![Open Source Helpers](https://www.codetriage.com/srfrnk/ua-device-detector/badges/users.svg)](https://www.codetriage.com/srfrnk/ua-device-detector)
+
+[![GitHub license](https://img.shields.io/github/license/srfrnk/ua-device-detector.svg)](https://github.com/srfrnk/ua-device-detector/blob/master/license.txt)
+[![npm](https://img.shields.io/npm/dm/ua-device-detector.svg)](https://www.npmjs.com/package/ua-device-detector) 
+[![npm](https://img.shields.io/npm/dt/ua-device-detector.svg)](https://www.npmjs.com/package/ua-device-detector)
+[![npm](https://img.shields.io/npm/v/ua-device-detector.svg)](https://www.npmjs.com/package/ua-device-detector)
+
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v2.0.0.html)
 
 ### Install
 $ bower i ua-device-detector -S
