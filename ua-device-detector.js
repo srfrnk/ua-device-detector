@@ -549,7 +549,7 @@
     }
 
     if (!!module && !!require) {
-        var reTree = require("re-tree");
+        var reTree = (window && window.reTree) || require("re-tree");
         module.exports = {
             parseUserAgent: function (ua, customDetectors) {
                 return parseUserAgent({ reTree: reTree || {}, customDetectors: customDetectors || [], userAgent: ua || "" });
