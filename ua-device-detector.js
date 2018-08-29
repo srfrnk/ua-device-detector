@@ -307,7 +307,7 @@
             return value;
         };
     }
-    
+
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
     if (!Array.prototype.find) {
         Object.defineProperty(Array.prototype, "find", {
@@ -351,7 +351,7 @@
                 return undefined;
             }
         });
-    }    
+    }
     /* ES5 polyfills End*/
 
     function parseUserAgent(options) {
@@ -432,7 +432,7 @@
         ].reduce(function (previousValue, currentValue) {
             return (previousValue === DEVICES.UNKNOWN && deviceInfo.raw.device[currentValue]) ? currentValue : previousValue;
         }, DEVICES.UNKNOWN);
-        
+
         deviceInfo.os_version = "unknown";
         if (deviceInfo.os !== OS.UNKNOWN) {
             var version = (OS_VERSIONS_RE[deviceInfo.os]||[])
@@ -444,7 +444,7 @@
                         {
                             return reMap.map;
                         }
-                        else 
+                        else
                         {
                             return reMap.map.call(null,res[1]);
                         }
@@ -509,7 +509,7 @@
             custom[customDetector.name] = reTree.test(ua, customDetector.re);
             return custom;
         }, {});
-        
+
         return deviceInfo;
     }
 
@@ -548,7 +548,7 @@
         };
     }
 
-    if (!!module && !!require) {
+    if (!!module) {
         var reTree = (window && window.reTree) || require("re-tree");
         module.exports = {
             parseUserAgent: function (ua, customDetectors) {
