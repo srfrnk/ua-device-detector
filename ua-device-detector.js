@@ -31,6 +31,7 @@
         CHROMECAST: "chromecast",
         APPLE_TV: "apple-tv",
         GOOGLE_TV: "google-tv",
+        MACINTOSH: "mac",
         UNKNOWN: "unknown"
     };
 
@@ -48,8 +49,8 @@
     };
 
     /**
-    * @deprecated Will be deleted in future versions. OS versions will not be list-hardcoded.
-    */
+     * @deprecated Will be deleted in future versions. OS versions will not be list-hardcoded.
+     */
     var OS_VERSIONS = {
         WINDOWS_3_11: "windows-3-11",
         WINDOWS_95: "windows-95",
@@ -87,26 +88,76 @@
     };
 
     var OS_RE = {
-        WINDOWS: { and: [{ or: [/\bWindows|(Win\d\d)\b/, /\bWin 9x\b/] }, { not: /\bWindows Phone\b/ }] },
-        MAC: { and: [/\bMac OS\b/, { not: /Windows Phone/ }] },
-        IOS: { and: [{ or: [/\biPad\b/, /\biPhone\b/, /\biPod\b/] }, { not: /Windows Phone/ }] },
-        ANDROID: { and: [/\bAndroid\b/, { not: /Windows Phone/ }] },
+        WINDOWS: {
+            and: [{
+                or: [/\bWindows|(Win\d\d)\b/, /\bWin 9x\b/]
+            }, {
+                not: /\bWindows Phone\b/
+            }]
+        },
+        MAC: {
+            and: [/\bMac OS\b/, {
+                not: /Windows Phone/
+            }]
+        },
+        IOS: {
+            and: [{
+                or: [/\biPad\b/, /\biPhone\b/, /\biPod\b/]
+            }, {
+                not: /Windows Phone/
+            }]
+        },
+        ANDROID: {
+            and: [/\bAndroid\b/, {
+                not: /Windows Phone/
+            }]
+        },
         LINUX: /\bLinux\b/,
         UNIX: /\bUNIX\b/,
-        FIREFOX_OS: { and: [/\bFirefox\b/, /Mobile\b/] },
+        FIREFOX_OS: {
+            and: [/\bFirefox\b/, /Mobile\b/]
+        },
         CHROME_OS: /\bCrOS\b/,
-        WINDOWS_PHONE: { or: [/\bIEMobile\b/, /\bWindows Phone\b/] },
+        WINDOWS_PHONE: {
+            or: [/\bIEMobile\b/, /\bWindows Phone\b/]
+        },
         PS4: /\bMozilla\/5.0 \(PlayStation 4\b/,
         VITA: /\bMozilla\/5.0 \(Play(S|s)tation Vita\b/
     };
 
     var BROWSERS_RE = {
-        CHROME: { and: [{ or: [/\bChrome\b/, /\bCriOS\b/,/\bHeadlessChrome\b/] }, { not: { or: [/\bOPR\b/, /\bEdge\b/, /\bCordova\b/] } }] },
-        FIREFOX: { and: [{ or: [/\bFirefox\b/, /\bFxiOS\b/] }, { not: /\bCordova\b/ }] },
-        SAFARI: { and: [/^((?!CriOS).)*\Safari\b.*$/, { not: { or: [/\bOPR\b/, /\bEdge\b/, /Windows Phone/, /\bCordova\b/, /\bChrome\b/] } }] },
-        OPERA: { or: [/Opera\b/, /\bOPR\b/] },
-        IE: { or: [/\bMSIE\b/, /\bTrident\b/, /^Mozilla\/5\.0 \(Windows NT 10\.0; Win64; x64\)$/] },
-        MS_EDGE: { or: [/\bEdge\b/] },
+        CHROME: {
+            and: [{
+                or: [/\bChrome\b/, /\bCriOS\b/, /\bHeadlessChrome\b/]
+            }, {
+                not: {
+                    or: [/\bOPR\b/, /\bEdge\b/, /\bCordova\b/]
+                }
+            }]
+        },
+        FIREFOX: {
+            and: [{
+                or: [/\bFirefox\b/, /\bFxiOS\b/]
+            }, {
+                not: /\bCordova\b/
+            }]
+        },
+        SAFARI: {
+            and: [/^((?!CriOS).)*\Safari\b.*$/, {
+                not: {
+                    or: [/\bOPR\b/, /\bEdge\b/, /Windows Phone/, /\bCordova\b/, /\bChrome\b/]
+                }
+            }]
+        },
+        OPERA: {
+            or: [/Opera\b/, /\bOPR\b/]
+        },
+        IE: {
+            or: [/\bMSIE\b/, /\bTrident\b/, /^Mozilla\/5\.0 \(Windows NT 10\.0; Win64; x64\)$/]
+        },
+        MS_EDGE: {
+            or: [/\bEdge\b/]
+        },
         PS4: /\bMozilla\/5.0 \(PlayStation 4\b/,
         VITA: /\bMozilla\/5.0 \(Play(S|s)tation Vita\b/,
         CORDOVA: /\bCordova\b/,
@@ -114,24 +165,37 @@
     };
 
     var DEVICES_RE = {
-        ANDROID: { and: [/\bAndroid\b/, { not: /Windows Phone/ }] },
+        ANDROID: {
+            and: [/\bAndroid\b/, {
+                not: /Windows Phone/
+            }]
+        },
         I_PAD: /\biPad\b/,
-        IPHONE: { and: [/\biPhone\b/, { not: /Windows Phone/ }] },
+        IPHONE: {
+            and: [/\biPhone\b/, {
+                not: /Windows Phone/
+            }]
+        },
         I_POD: /\biPod\b/,
         BLACKBERRY: /\bblackberry\b/,
-        FIREFOX_OS: { and: [/\bFirefox\b/, /\bMobile\b/] },
+        FIREFOX_OS: {
+            and: [/\bFirefox\b/, /\bMobile\b/]
+        },
         CHROME_BOOK: /\bCrOS\b/,
-        WINDOWS_PHONE: { or: [/\bIEMobile\b/, /\bWindows Phone\b/] },
+        WINDOWS_PHONE: {
+            or: [/\bIEMobile\b/, /\bWindows Phone\b/]
+        },
         PS4: /\bMozilla\/5.0 \(PlayStation 4\b/,
         CHROMECAST: /\bCrKey\b/,
         APPLE_TV: /^iTunes-AppleTV\/4.1$/,
         GOOGLE_TV: /\bGoogleTV\b/,
-        VITA: /\bMozilla\/5.0 \(Play(S|s)tation Vita\b/
+        VITA: /\bMozilla\/5.0 \(Play(S|s)tation Vita\b/,
+        MACINTOSH: /\bMacintosh\b/,
     };
 
     /**
-    * @deprecated Will be deleted in future versions. OS versions will not be list-hardcoded.
-    */
+     * @deprecated Will be deleted in future versions. OS versions will not be list-hardcoded.
+     */
     var OS_VERSIONS_RE_OLD = {
         WINDOWS_3_11: /Win16/,
         WINDOWS_95: /(Windows 95|Win95|Windows_95)/,
@@ -149,7 +213,11 @@
         WINDOWS_PHONE_7_5: /(Windows Phone OS 7.5)/,
         WINDOWS_PHONE_8_1: /(Windows Phone 8.1)/,
         WINDOWS_PHONE_10: /(Windows Phone 10)/,
-        WINDOWS_NT_4_0: { and: [/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/, { not: /Windows NT 10.0/ }] },
+        WINDOWS_NT_4_0: {
+            and: [/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/, {
+                not: /Windows NT 10.0/
+            }]
+        },
         MACOSX: /(MAC OS X\s*[^ 0-9])/,
         MACOSX_3: /(Darwin 10.3|Mac OS X 10.3)/,
         MACOSX_4: /(Darwin 10.4|Mac OS X 10.4)/,
@@ -167,49 +235,149 @@
     };
 
     var OS_VERSIONS_RE_MAP = {
-        WINDOWS: [
-            {re:/Win16/,map:"windows-3-11"},
-            {re:/(Windows 95|Win95|Windows_95)/,map:"windows-95"},
-            {re:/(Win 9x 4.90|Windows ME)/,map:"windows-me"},
-            {re:/(Windows 98|Win98)/,map:"windows-98"},
-            {re:/Windows CE/,map:"windows-ce"},
-            {re:/(Windows NT 5.0|Windows 2000)/,map:"windows-2000"},
-            {re:/(Windows NT 5.1|Windows XP)/,map:"windows-xp"},
-            {re:/Windows NT 5.2/,map:"windows-server-2003"},
-            {re:/Windows NT 6.0/,map:"windows-vista"},
-            {re:/(Windows 7|Windows NT 6.1)/,map:"windows-7"},
-            {re:/(Windows 8.1|Windows NT 6.3)/,map:"windows-8-1"},
-            {re:/(Windows 8|Windows NT 6.2)/,map:"windows-8"},
-            {re:/(Windows NT 10.0)/,map:"windows-10"},
-            {re:{ and: [/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/, { not: /Windows NT 10.0/ }] },map:"windows-nt-4-0"},
+        WINDOWS: [{
+                re: /Win16/,
+                map: "windows-3-11"
+            },
+            {
+                re: /(Windows 95|Win95|Windows_95)/,
+                map: "windows-95"
+            },
+            {
+                re: /(Win 9x 4.90|Windows ME)/,
+                map: "windows-me"
+            },
+            {
+                re: /(Windows 98|Win98)/,
+                map: "windows-98"
+            },
+            {
+                re: /Windows CE/,
+                map: "windows-ce"
+            },
+            {
+                re: /(Windows NT 5.0|Windows 2000)/,
+                map: "windows-2000"
+            },
+            {
+                re: /(Windows NT 5.1|Windows XP)/,
+                map: "windows-xp"
+            },
+            {
+                re: /Windows NT 5.2/,
+                map: "windows-server-2003"
+            },
+            {
+                re: /Windows NT 6.0/,
+                map: "windows-vista"
+            },
+            {
+                re: /(Windows 7|Windows NT 6.1)/,
+                map: "windows-7"
+            },
+            {
+                re: /(Windows 8.1|Windows NT 6.3)/,
+                map: "windows-8-1"
+            },
+            {
+                re: /(Windows 8|Windows NT 6.2)/,
+                map: "windows-8"
+            },
+            {
+                re: /(Windows NT 10.0)/,
+                map: "windows-10"
+            },
+            {
+                re: {
+                    and: [/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/, {
+                        not: /Windows NT 10.0/
+                    }]
+                },
+                map: "windows-nt-4-0"
+            },
         ],
-        WINDOWS_PHONE:[
-            {re:/(Windows Phone OS 7.5)/,map:"windows-phone-7-5"},
-            {re:/(Windows Phone 8.1)/,map:"windows-phone-8-1"},
-            {re:/(Windows Phone 10)/,map:"windows-phone-10"},
+        WINDOWS_PHONE: [{
+                re: /(Windows Phone OS 7.5)/,
+                map: "windows-phone-7-5"
+            },
+            {
+                re: /(Windows Phone 8.1)/,
+                map: "windows-phone-8-1"
+            },
+            {
+                re: /(Windows Phone 10)/,
+                map: "windows-phone-10"
+            },
         ],
-        MAC:[
-            { re: /(MAC OS X\s*[^ 0-9])/, map: 'mac-os-x' },
-            { re: /(Darwin 10.3|Mac OS X 10.3)/, map: 'mac-os-x-3' },
-            { re: /(Darwin 10.4|Mac OS X 10.4)/, map: 'mac-os-x-4' },
-            { re: /(Mac OS X 10.5)/, map: 'mac-os-x-5' },
-            { re: /(Mac OS X 10.6)/, map: 'mac-os-x-6' },
-            { re: /(Mac OS X 10.7)/, map: 'mac-os-x-7' },
-            { re: /(Mac OS X 10.8)/, map: 'mac-os-x-8' },
-            { re: /(Mac OS X 10.9)/, map: 'mac-os-x-9' },
-            { re: /(Mac OS X 10.10)/, map: 'mac-os-x-10' },
-            { re: /(Mac OS X 10.11)/, map: 'mac-os-x-11' },
-            { re: /(Mac OS X 10.12)/, map: 'mac-os-x-12' },
-            { re: /(Mac OS X 10.13)/, map: 'mac-os-x-13' },
-            { re: /(Mac OS X 10.14)/, map: 'mac-os-x-14' },
-            { re: /(Mac OS X 10.15)/, map: 'mac-os-x-15' }
+        MAC: [{
+                re: /(MAC OS X\s*[^ 0-9])/,
+                map: 'mac-os-x'
+            },
+            {
+                re: /(Darwin 10.3|Mac OS X 10.3)/,
+                map: 'mac-os-x-3'
+            },
+            {
+                re: /(Darwin 10.4|Mac OS X 10.4)/,
+                map: 'mac-os-x-4'
+            },
+            {
+                re: /(Mac OS X 10.5)/,
+                map: 'mac-os-x-5'
+            },
+            {
+                re: /(Mac OS X 10.6)/,
+                map: 'mac-os-x-6'
+            },
+            {
+                re: /(Mac OS X 10.7)/,
+                map: 'mac-os-x-7'
+            },
+            {
+                re: /(Mac OS X 10.8)/,
+                map: 'mac-os-x-8'
+            },
+            {
+                re: /(Mac OS X 10.9)/,
+                map: 'mac-os-x-9'
+            },
+            {
+                re: /(Mac OS X 10.10)/,
+                map: 'mac-os-x-10'
+            },
+            {
+                re: /(Mac OS X 10.11)/,
+                map: 'mac-os-x-11'
+            },
+            {
+                re: /(Mac OS X 10.12)/,
+                map: 'mac-os-x-12'
+            },
+            {
+                re: /(Mac OS X 10.13)/,
+                map: 'mac-os-x-13'
+            },
+            {
+                re: /(Mac OS X 10.14)/,
+                map: 'mac-os-x-14'
+            },
+            {
+                re: /(Mac OS X 10.15)/,
+                map: 'mac-os-x-15'
+            }
         ],
-        IOS:[
-            { re: /OS ([\d_\-.]+)/, map: function(match){return match.replace(/_/g,'.');} }
-        ],
-        ANDROID:[
-            { re: /Android ([\d.]+)/, map: function(match){return match;} }
-        ]
+        IOS: [{
+            re: /OS ([\d_\-.]+)/,
+            map: function (match) {
+                return match.replace(/_/g, '.');
+            }
+        }],
+        ANDROID: [{
+            re: /Android ([\d.]+)/,
+            map: function (match) {
+                return match;
+            }
+        }]
     };
 
     var OS_VERSIONS_RE = Object.keys(OS_VERSIONS_RE_MAP).reduce(function (obj, key) {
@@ -218,7 +386,7 @@
     }, {});
 
     var BROWSER_VERSIONS_RE_MAP = {
-        CHROME: [/\bChrome\/([\d\.]+)\b/, /\bCriOS\/([\d\.]+)\b/,/\bHeadlessChrome Safari\/([\d\.]+)\b/],
+        CHROME: [/\bChrome\/([\d\.]+)\b/, /\bCriOS\/([\d\.]+)\b/, /\bHeadlessChrome Safari\/([\d\.]+)\b/],
         FIREFOX: [/\bFirefox\/([\d\.]+)\b/, /\bFxiOS\/([\d\.]+)\b/],
         SAFARI: /\bVersion\/([\d\.]+)\b/,
         OPERA: [/\bVersion\/([\d\.]+)\b/, /\bOPR\/([\d\.]+)\b/],
@@ -239,7 +407,9 @@
         Object.keys = (function () {
             'use strict';
             var hasOwnProperty = Object.prototype.hasOwnProperty,
-                hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+                hasDontEnumBug = !({
+                    toString: null
+                }).propertyIsEnumerable('toString'),
                 dontEnums = [
                     'toString',
                     'toLocaleString',
@@ -256,7 +426,8 @@
                     throw new TypeError('Object.keys called on non-object');
                 }
 
-                var result = [], prop, i;
+                var result = [],
+                    prop, i;
 
                 for (prop in obj) {
                     if (hasOwnProperty.call(obj, prop)) {
@@ -279,7 +450,7 @@
     // Production steps of ECMA-262, Edition 5, 15.4.4.21
     // Reference: http://es5.github.io/#x15.4.4.21
     if (!Array.prototype.reduce) {
-        Array.prototype.reduce = function (callback /*, initialValue*/) {
+        Array.prototype.reduce = function (callback /*, initialValue*/ ) {
             'use strict';
             if (this == null) {
                 throw new TypeError('Array.prototype.reduce called on null or undefined');
@@ -287,7 +458,10 @@
             if (typeof callback !== 'function') {
                 throw new TypeError(callback + ' is not a function');
             }
-            var t = Object(this), len = t.length >>> 0, k = 0, value;
+            var t = Object(this),
+                len = t.length >>> 0,
+                k = 0,
+                value;
             if (arguments.length == 2) {
                 value = arguments[1];
             } else {
@@ -308,10 +482,10 @@
         };
     }
 
-// https://tc39.github.io/ecma262/#sec-array.prototype.find
+    // https://tc39.github.io/ecma262/#sec-array.prototype.find
     if (!Array.prototype.find) {
         Object.defineProperty(Array.prototype, "find", {
-            value: function(predicate) {
+            value: function (predicate) {
                 // 1. Let O be ? ToObject(this value).
                 if (this == null) {
                     throw new TypeError('"this" is null or not defined');
@@ -369,7 +543,7 @@
         };
 
         deviceInfo.raw.os = Object.keys(OS).reduce(function (obj, item) {
-            obj[OS[item]]  = reTree.test(ua, OS_RE[item]);
+            obj[OS[item]] = reTree.test(ua, OS_RE[item]);
             return obj;
         }, {});
 
@@ -428,33 +602,28 @@
             DEVICES.CHROMECAST,
             DEVICES.APPLE_TV,
             DEVICES.GOOGLE_TV,
-            DEVICES.VITA
+            DEVICES.VITA,
+            DEVICES.MACINTOSH,
         ].reduce(function (previousValue, currentValue) {
             return (previousValue === DEVICES.UNKNOWN && deviceInfo.raw.device[currentValue]) ? currentValue : previousValue;
         }, DEVICES.UNKNOWN);
 
         deviceInfo.os_version = "unknown";
         if (deviceInfo.os !== OS.UNKNOWN) {
-            var version = (OS_VERSIONS_RE[deviceInfo.os]||[])
-                .map(function(reMap){
-                    var res=reTree.exec(ua, reMap.re);
-                    if(!!res)
-                    {
-                        if(typeof reMap.map === 'string' || reMap.map instanceof String)
-                        {
+            var version = (OS_VERSIONS_RE[deviceInfo.os] || [])
+                .map(function (reMap) {
+                    var res = reTree.exec(ua, reMap.re);
+                    if (!!res) {
+                        if (typeof reMap.map === 'string' || reMap.map instanceof String) {
                             return reMap.map;
+                        } else {
+                            return reMap.map.call(null, res[1]);
                         }
-                        else
-                        {
-                            return reMap.map.call(null,res[1]);
-                        }
-                    }
-                    else
-                    {
+                    } else {
                         return null;
                     }
                 })
-                .find(function(element){
+                .find(function (element) {
                     return !!element;
                 });
             if (!!version) {
@@ -499,6 +668,7 @@
             return [
                 DEVICES.PS4,
                 DEVICES.CHROME_BOOK,
+                DEVICES.MACINTOSH,
                 DEVICES.UNKNOWN
             ].some(function (item) {
                 return deviceInfo.device == item;
@@ -528,7 +698,11 @@
             .factory("uaDeviceDetector", ["reTree", function (reTree) {
                 return {
                     parseUserAgent: function (ua, customDetectors) {
-                        return parseUserAgent({ reTree: reTree || {}, customDetectors: customDetectors || [], userAgent: ua || "" });
+                        return parseUserAgent({
+                            reTree: reTree || {},
+                            customDetectors: customDetectors || [],
+                            userAgent: ua || ""
+                        });
                     },
                     BROWSERS: BROWSERS,
                     DEVICES: DEVICES,
@@ -540,7 +714,11 @@
     if (!!window) {
         window.uaDeviceDetector = {
             parseUserAgent: function (ua, customDetectors) {
-                return parseUserAgent({ reTree: window.reTree || {}, customDetectors: customDetectors || [], userAgent: ua || "" });
+                return parseUserAgent({
+                    reTree: window.reTree || {},
+                    customDetectors: customDetectors || [],
+                    userAgent: ua || ""
+                });
             },
             BROWSERS: BROWSERS,
             DEVICES: DEVICES,
@@ -552,7 +730,11 @@
         var reTree = (window && window.reTree) || require("re-tree");
         module.exports = {
             parseUserAgent: function (ua, customDetectors) {
-                return parseUserAgent({ reTree: reTree || {}, customDetectors: customDetectors || [], userAgent: ua || "" });
+                return parseUserAgent({
+                    reTree: reTree || {},
+                    customDetectors: customDetectors || [],
+                    userAgent: ua || ""
+                });
             },
             BROWSERS: BROWSERS,
             DEVICES: DEVICES,

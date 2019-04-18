@@ -3,17 +3,17 @@ var USER_AGENTS_TESTS = [
 
     // Chrome
     ["Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36", "windows", "windows-8-1", "chrome", "37.0.2049.0", "unknown", false, false, true],
-    ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1664.3 Safari/537.36", "mac", "mac-os-x-9", "chrome", "32.0.1664.3", "unknown", false, false, true],
+    ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1664.3 Safari/537.36", "mac", "mac-os-x-9", "chrome", "32.0.1664.3", "mac", false, false, true],
     ["Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.21 (KHTML, like Gecko) Chrome/19.0.1042.0 Safari/535.21", "linux", "unknown", "chrome", "19.0.1042.0", "unknown", false, false, true],
 
     // Firefox
     ["Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0", "windows", "windows-xp", "firefox", "31.0", "unknown", false, false, true],
-    ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:25.0) Gecko/20100101 Firefox/25.0", "mac", "mac-os-x-6", "firefox", "25.0", "unknown", false, false, true],
+    ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:25.0) Gecko/20100101 Firefox/25.0", "mac", "mac-os-x-6", "firefox", "25.0", "mac", false, false, true],
     ["Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:24.0) Gecko/20100101 Firefox/24.0", "linux", "unknown", "firefox", "24.0", "unknown", false, false, true],
 
     // Safari
     ["Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25", "ios", "6.0", "safari", "6.0", "ipad", true, true, false],
-    ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2", "mac", "mac-os-x-6", "safari", "5.1.7", "unknown", false, false, true],
+    ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2", "mac", "mac-os-x-6", "safari", "5.1.7", "mac", false, false, true],
     ["Mozilla/5.0 (X11; U; Linux x86_64; en-us) AppleWebKit/531.2+ (KHTML, like Gecko) Version/5.0 Safari/531.2+", "linux", "unknown", "safari", "5.0", "unknown", false, false, true],
 
     // Issue #10 - NG
@@ -77,7 +77,7 @@ var USER_AGENTS_TESTS = [
     ["Mozilla/5.0 (Mobile; Windows Phone 8.1; Android 4.0; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; NOKIA; Lumia 930) like iPhone OS 7_0_3 Mac OS X AppleWebKit/537 (KHTML, like Gecko) Mobile Safari/537", "windows-phone", "windows-phone-8-1", "ie", "11.0", "windows-phone", true, false, false],
 
     // Issue 42 - NG
-    ["Mozilla/5.0 (iPhone; CPU iPhone OS 9_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/47.0.2526.107 Mobile/13C75 Safari/601.1.46", "ios","9.2", "chrome", "47.0.2526.107", "iphone", true, false, false],
+    ["Mozilla/5.0 (iPhone; CPU iPhone OS 9_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/47.0.2526.107 Mobile/13C75 Safari/601.1.46", "ios", "9.2", "chrome", "47.0.2526.107", "iphone", true, false, false],
     // Issue 39 - NG
     ["Mozilla/5.0 (iPad; CPU OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13B143 [FBAN/MessengerForiOS;FBAV/48.0.0.20.47;FBBV/17291106;FBDV/iPad2,5;FBMD/iPad;FBSN/iPhone OS;FBSV/9.1;FBSS/1; FBCR/;FBID/tablet;FBLC/cs_CZ;FBOP/1]", "ios", "9.1", "fb-messenger", "0", "ipad", true, true, false],
 
@@ -108,19 +108,21 @@ var USER_AGENTS_TESTS = [
 
     // Issue 62 - NG
     ["Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.88 Safari/537.36",
-        "windows", "windows-8-1", "chrome", "57.0.2987.88", "unknown", false, false, true, function (uaDeviceDetector, userAgent) {
+        "windows", "windows-8-1", "chrome", "57.0.2987.88", "unknown", false, false, true,
+        function (uaDeviceDetector, userAgent) {
             it("Should not have safari detected", function () {
                 var deviceInfo = uaDeviceDetector.parseUserAgent(userAgent);
                 expect(deviceInfo.raw.browser.safari).toBe(false);
             });
-        }],
+        }
+    ],
 
     // Issue 1
     ["Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome Safari/537.36", "linux", "unknown", "chrome", "537.36", "unknown", false, false, true],
-    
+
     // Issue 3
     ["Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/60.0.3112.89 Mobile/15A5370a Safari/602.1", "ios", "11.0", "chrome", "60.0.3112.89", "iphone", true, false, false],
-    
+
     ["iOS 9.3.2 (iPad): Mozilla/5.0 (iPad; CPU OS 9_3_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13F69 Safari/601.1", "ios", "9.3.2", "safari", "9.0", "ipad", true, true, false],
     ["iOS 9.3 (iPhone): Mozilla/5.0 (iPhone; CPU iPhone OS 9_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13E188a Safari/601.1", "ios", "9.3", "safari", "9.0", "iphone", true, false, false],
     ["iOS 10.1.1 (iPhone): Mozilla/5.0 (iPhone; CPU iPhone OS 10_1_1 like Mac OS X) AppleWebKit/602.2.14 (KHTML, like Gecko) Version/10.0 Mobile/14B100 Safari/602.1", "ios", "10.1.1", "safari", "10.0", "iphone", true, false, false],
@@ -128,16 +130,25 @@ var USER_AGENTS_TESTS = [
     ["iPhone 6+ : Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Version/11.0 Mobile/15C202 Safari/604.1", "ios", "11.2.2", "safari", "11.0", "iphone", true, false, false],
     ["iPhone 5S : Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Version/11.0 Mobile/15C202 Safari/604.1", "ios", "11.2.2", "safari", "11.0", "iphone", true, false, false],
     ["iPhone 6 : Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.5 (KHTML, like Gecko) Version/11.0 Mobile/15C5092b Safari/604.1", "ios", "11.2", "safari", "11.0", "iphone", true, false, false],
-    
+
     ["Moto E : Mozilla/5.0 (Linux; Android 5.1; XT1021 Build/LPCS23.13-34.8-3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36", "android", "5.1", "chrome", "63.0.3239.111", "android", true, false, false],
+
+    // Issue 9
+    ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36", "mac", "mac-os-x-14", "chrome", "73.0.3683.86", "mac", false, false, true],
 ];
 
 var CUSTOM_DETECTION_TESTS = [
     ["missing detection", "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36", /\bCustom_UA_Entry\b/, false],
     ["existing detection", "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36 Custom_UA_Entry/1.1", /\bCustom_UA_Entry\b/, true],
     ["string detector", "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36 Custom_UA_Entry/1.1", "\\bCustom_UA_Entry\\b", true],
-    ["reTree detector", "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36 Custom_UA_Entry/1.1", { or: ["\\bCustom_UA_Entry\\b"] }, true],
-    ["complex reTree detector", "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36 Custom_UA_Entry/1.1", { and: ["\\bCustom_UA_Entry\\b", { not: "\\bChrome\\b" }] }, false],
+    ["reTree detector", "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36 Custom_UA_Entry/1.1", {
+        or: ["\\bCustom_UA_Entry\\b"]
+    }, true],
+    ["complex reTree detector", "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36 Custom_UA_Entry/1.1", {
+        and: ["\\bCustom_UA_Entry\\b", {
+            not: "\\bChrome\\b"
+        }]
+    }, false],
 ];
 
 if (typeof module !== 'undefined') {
