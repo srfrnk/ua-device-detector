@@ -135,6 +135,9 @@ var USER_AGENTS_TESTS = [
 
     // Issue 9
     ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36", "mac", "mac-os-x-14", "chrome", "73.0.3683.86", "mac", false, false, true],
+
+    // Issue #16
+    ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36 Edg/77.0.235.27", "mac", "mac-os-x-14", "ms-edge-beta", "77.0.235.27", "mac", false, false, true],
 ];
 
 var CUSTOM_DETECTION_TESTS = [

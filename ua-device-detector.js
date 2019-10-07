@@ -12,6 +12,7 @@
         OPERA: "opera",
         IE: "ie",
         MS_EDGE: "ms-edge",
+        MS_EDGE_BETA: "ms-edge-beta",
         FB_MESSENGER: "fb-messenger",
         CORDOVA: "cordova",
         UNKNOWN: "unknown"
@@ -131,7 +132,7 @@
                 or: [/\bChrome\b/, /\bCriOS\b/, /\bHeadlessChrome\b/]
             }, {
                 not: {
-                    or: [/\bOPR\b/, /\bEdge\b/, /\bCordova\b/]
+                    or: [/\bOPR\b/, /\bEdge\b/, /\bEdg\b/, /\bCordova\b/]
                 }
             }]
         },
@@ -145,7 +146,7 @@
         SAFARI: {
             and: [/^((?!CriOS).)*\Safari\b.*$/, {
                 not: {
-                    or: [/\bOPR\b/, /\bEdge\b/, /Windows Phone/, /\bCordova\b/, /\bChrome\b/]
+                    or: [/\bOPR\b/, /\bEdge\b/,/\bEdg\b/, /Windows Phone/, /\bCordova\b/, /\bChrome\b/]
                 }
             }]
         },
@@ -157,6 +158,9 @@
         },
         MS_EDGE: {
             or: [/\bEdge\b/]
+        },
+        MS_EDGE_BETA: {
+            or: [/\bEdg\b/]
         },
         PS4: /\bMozilla\/5.0 \(PlayStation 4\b/,
         VITA: /\bMozilla\/5.0 \(Play(S|s)tation Vita\b/,
@@ -236,135 +240,135 @@
 
     var OS_VERSIONS_RE_MAP = {
         WINDOWS: [{
-                re: /Win16/,
-                map: "windows-3-11"
+            re: /Win16/,
+            map: "windows-3-11"
+        },
+        {
+            re: /(Windows 95|Win95|Windows_95)/,
+            map: "windows-95"
+        },
+        {
+            re: /(Win 9x 4.90|Windows ME)/,
+            map: "windows-me"
+        },
+        {
+            re: /(Windows 98|Win98)/,
+            map: "windows-98"
+        },
+        {
+            re: /Windows CE/,
+            map: "windows-ce"
+        },
+        {
+            re: /(Windows NT 5.0|Windows 2000)/,
+            map: "windows-2000"
+        },
+        {
+            re: /(Windows NT 5.1|Windows XP)/,
+            map: "windows-xp"
+        },
+        {
+            re: /Windows NT 5.2/,
+            map: "windows-server-2003"
+        },
+        {
+            re: /Windows NT 6.0/,
+            map: "windows-vista"
+        },
+        {
+            re: /(Windows 7|Windows NT 6.1)/,
+            map: "windows-7"
+        },
+        {
+            re: /(Windows 8.1|Windows NT 6.3)/,
+            map: "windows-8-1"
+        },
+        {
+            re: /(Windows 8|Windows NT 6.2)/,
+            map: "windows-8"
+        },
+        {
+            re: /(Windows NT 10.0)/,
+            map: "windows-10"
+        },
+        {
+            re: {
+                and: [/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/, {
+                    not: /Windows NT 10.0/
+                }]
             },
-            {
-                re: /(Windows 95|Win95|Windows_95)/,
-                map: "windows-95"
-            },
-            {
-                re: /(Win 9x 4.90|Windows ME)/,
-                map: "windows-me"
-            },
-            {
-                re: /(Windows 98|Win98)/,
-                map: "windows-98"
-            },
-            {
-                re: /Windows CE/,
-                map: "windows-ce"
-            },
-            {
-                re: /(Windows NT 5.0|Windows 2000)/,
-                map: "windows-2000"
-            },
-            {
-                re: /(Windows NT 5.1|Windows XP)/,
-                map: "windows-xp"
-            },
-            {
-                re: /Windows NT 5.2/,
-                map: "windows-server-2003"
-            },
-            {
-                re: /Windows NT 6.0/,
-                map: "windows-vista"
-            },
-            {
-                re: /(Windows 7|Windows NT 6.1)/,
-                map: "windows-7"
-            },
-            {
-                re: /(Windows 8.1|Windows NT 6.3)/,
-                map: "windows-8-1"
-            },
-            {
-                re: /(Windows 8|Windows NT 6.2)/,
-                map: "windows-8"
-            },
-            {
-                re: /(Windows NT 10.0)/,
-                map: "windows-10"
-            },
-            {
-                re: {
-                    and: [/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/, {
-                        not: /Windows NT 10.0/
-                    }]
-                },
-                map: "windows-nt-4-0"
-            },
+            map: "windows-nt-4-0"
+        },
         ],
         WINDOWS_PHONE: [{
-                re: /(Windows Phone OS 7.5)/,
-                map: "windows-phone-7-5"
-            },
-            {
-                re: /(Windows Phone 8.1)/,
-                map: "windows-phone-8-1"
-            },
-            {
-                re: /(Windows Phone 10)/,
-                map: "windows-phone-10"
-            },
+            re: /(Windows Phone OS 7.5)/,
+            map: "windows-phone-7-5"
+        },
+        {
+            re: /(Windows Phone 8.1)/,
+            map: "windows-phone-8-1"
+        },
+        {
+            re: /(Windows Phone 10)/,
+            map: "windows-phone-10"
+        },
         ],
         MAC: [{
-                re: /(MAC OS X\s*[^ 0-9])/,
-                map: 'mac-os-x'
-            },
-            {
-                re: /(Darwin 10.3|Mac OS X 10.3)/,
-                map: 'mac-os-x-3'
-            },
-            {
-                re: /(Darwin 10.4|Mac OS X 10.4)/,
-                map: 'mac-os-x-4'
-            },
-            {
-                re: /(Mac OS X 10.5)/,
-                map: 'mac-os-x-5'
-            },
-            {
-                re: /(Mac OS X 10.6)/,
-                map: 'mac-os-x-6'
-            },
-            {
-                re: /(Mac OS X 10.7)/,
-                map: 'mac-os-x-7'
-            },
-            {
-                re: /(Mac OS X 10.8)/,
-                map: 'mac-os-x-8'
-            },
-            {
-                re: /(Mac OS X 10.9)/,
-                map: 'mac-os-x-9'
-            },
-            {
-                re: /(Mac OS X 10.10)/,
-                map: 'mac-os-x-10'
-            },
-            {
-                re: /(Mac OS X 10.11)/,
-                map: 'mac-os-x-11'
-            },
-            {
-                re: /(Mac OS X 10.12)/,
-                map: 'mac-os-x-12'
-            },
-            {
-                re: /(Mac OS X 10.13)/,
-                map: 'mac-os-x-13'
-            },
-            {
-                re: /(Mac OS X 10.14)/,
-                map: 'mac-os-x-14'
-            },
-            {
-                re: /(Mac OS X 10.15)/,
-                map: 'mac-os-x-15'
-            }
+            re: /(MAC OS X\s*[^ 0-9])/,
+            map: 'mac-os-x'
+        },
+        {
+            re: /(Darwin 10.3|Mac OS X 10.3)/,
+            map: 'mac-os-x-3'
+        },
+        {
+            re: /(Darwin 10.4|Mac OS X 10.4)/,
+            map: 'mac-os-x-4'
+        },
+        {
+            re: /(Mac OS X 10.5)/,
+            map: 'mac-os-x-5'
+        },
+        {
+            re: /(Mac OS X 10.6)/,
+            map: 'mac-os-x-6'
+        },
+        {
+            re: /(Mac OS X 10.7)/,
+            map: 'mac-os-x-7'
+        },
+        {
+            re: /(Mac OS X 10.8)/,
+            map: 'mac-os-x-8'
+        },
+        {
+            re: /(Mac OS X 10.9)/,
+            map: 'mac-os-x-9'
+        },
+        {
+            re: /(Mac OS X 10.10)/,
+            map: 'mac-os-x-10'
+        },
+        {
+            re: /(Mac OS X 10.11)/,
+            map: 'mac-os-x-11'
+        },
+        {
+            re: /(Mac OS X 10.12)/,
+            map: 'mac-os-x-12'
+        },
+        {
+            re: /(Mac OS X 10.13)/,
+            map: 'mac-os-x-13'
+        },
+        {
+            re: /(Mac OS X 10.14)/,
+            map: 'mac-os-x-14'
+        },
+        {
+            re: /(Mac OS X 10.15)/,
+            map: 'mac-os-x-15'
+        }
         ],
         IOS: [{
             re: /OS ([\d_\-.]+)/,
@@ -392,7 +396,8 @@
         OPERA: [/\bVersion\/([\d\.]+)\b/, /\bOPR\/([\d\.]+)\b/],
         IE: [/\bMSIE ([\d\.]+\w?)\b/, /\brv:([\d\.]+\w?)\b/],
         CORDOVA: /\bCordova\/([\d\.]+)\b/,
-        MS_EDGE: /\bEdge\/([\d\.]+)\b/
+        MS_EDGE: /\bEdge\/([\d\.]+)\b/,
+        MS_EDGE_BETA: /\bEdg\/([\d\.]+)\b/
     };
 
     var BROWSER_VERSIONS_RE = Object.keys(BROWSER_VERSIONS_RE_MAP).reduce(function (obj, key) {
@@ -450,7 +455,7 @@
     // Production steps of ECMA-262, Edition 5, 15.4.4.21
     // Reference: http://es5.github.io/#x15.4.4.21
     if (!Array.prototype.reduce) {
-        Array.prototype.reduce = function (callback /*, initialValue*/ ) {
+        Array.prototype.reduce = function (callback /*, initialValue*/) {
             'use strict';
             if (this == null) {
                 throw new TypeError('Array.prototype.reduce called on null or undefined');
@@ -583,6 +588,7 @@
             BROWSERS.OPERA,
             BROWSERS.IE,
             BROWSERS.MS_EDGE,
+            BROWSERS.MS_EDGE_BETA,
             BROWSERS.CORDOVA,
             BROWSERS.FB_MESSENGER
         ].reduce(function (previousValue, currentValue) {
