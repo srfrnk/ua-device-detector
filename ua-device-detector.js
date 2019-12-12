@@ -146,7 +146,7 @@
         SAFARI: {
             and: [/^((?!CriOS).)*\Safari\b.*$/, {
                 not: {
-                    or: [/\bOPR\b/, /\bEdge\b/,/\bEdg\b/, /Windows Phone/, /\bCordova\b/, /\bChrome\b/]
+                    or: [/\bOPR\b/, /\bEdge\b/, /\bEdg\b/, /Windows Phone/, /\bCordova\b/, /\bChrome\b/]
                 }
             }]
         },
@@ -537,10 +537,15 @@
         var reTree = !!options ? options.reTree : {};
         var customDetectors = !!options ? options.customDetectors : [];
         var ua = !!options ? options.userAgent : "";
+        var modifiers = {
+            platform: !!options ? options.platform : "",
+            maxTouchPoints: !!options ? options.maxTouchPoints : ""
+        };
 
         var deviceInfo = {
             raw: {
                 userAgent: ua,
+                modifiers: modifiers,
                 os: {},
                 browser: {},
                 device: {}
@@ -686,7 +691,18 @@
             return custom;
         }, {});
 
+        applyModifiers(deviceInfo, modifiers);
+
         return deviceInfo;
+    }
+
+    function applyModifiers(deviceInfo, modifiers) {
+        /* https://github.com/srfrnk/ua-device-detector/issues/17 */
+        if (deviceInfo.os === OS.MAC && modifiers.platform === 'MacIntel' && modifiers.maxTouchPoints > 1) {
+            deviceInfo.os = OS.IOS;
+            deviceInfo.os_version = "13.0";
+            deviceInfo.device = DEVICES.IPHONE;
+        }
     }
 
     if (!!angular) {
@@ -703,11 +719,13 @@
             .constant("OS_VERSIONS", OS_VERSIONS)
             .factory("uaDeviceDetector", ["reTree", function (reTree) {
                 return {
-                    parseUserAgent: function (ua, customDetectors) {
+                    parseUserAgent: function (ua, customDetectors, platform, maxTouchPoints) {
                         return parseUserAgent({
                             reTree: reTree || {},
                             customDetectors: customDetectors || [],
-                            userAgent: ua || ""
+                            userAgent: ua || "",
+                            platform: platform,
+                            maxTouchPoints: maxTouchPoints
                         });
                     },
                     BROWSERS: BROWSERS,
@@ -719,11 +737,13 @@
 
     if (!!window) {
         window.uaDeviceDetector = {
-            parseUserAgent: function (ua, customDetectors) {
+            parseUserAgent: function (ua, customDetectors, platform, maxTouchPoints) {
                 return parseUserAgent({
                     reTree: window.reTree || {},
                     customDetectors: customDetectors || [],
-                    userAgent: ua || ""
+                    userAgent: ua || "",
+                    platform: platform,
+                    maxTouchPoints: maxTouchPoints
                 });
             },
             BROWSERS: BROWSERS,
@@ -735,11 +755,13 @@
     if (!!module) {
         var reTree = (window && window.reTree) || require("re-tree");
         module.exports = {
-            parseUserAgent: function (ua, customDetectors) {
+            parseUserAgent: function (ua, customDetectors, platform, maxTouchPoints) {
                 return parseUserAgent({
                     reTree: reTree || {},
                     customDetectors: customDetectors || [],
-                    userAgent: ua || ""
+                    userAgent: ua || "",
+                    platform: platform,
+                    maxTouchPoints: maxTouchPoints
                 });
             },
             BROWSERS: BROWSERS,

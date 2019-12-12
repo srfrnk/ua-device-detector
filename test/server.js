@@ -8,7 +8,7 @@
     "use strict";
 
     var common = require("./common");
-    
+
     describe('ua-device-detector server tests', function () {
         var uaDeviceDetector = require('../ua-device-detector.js');
 
@@ -35,38 +35,42 @@
         });
 
         describe("with user-agent", function () {
-            function describeUserAgent(userAgent, os, os_version, browser, browser_version, device, isMobile, isTablet, isDesktop, extras) {
+            function describeUserAgent(userAgent, modifiers, os, os_version, browser, browser_version, device, isMobile, isTablet, isDesktop, extras) {
+                const platform = !!modifiers ? modifiers.platform : null;
+                const maxTouchPoints = !!modifiers ? modifiers.maxTouchPoints : null;
+                const parseUserAgent = () => uaDeviceDetector.parseUserAgent(userAgent, null, platform, maxTouchPoints);
+
                 describe(userAgent, function () {
                     it("should detect os = " + os, function () {
-                        var deviceInfo = uaDeviceDetector.parseUserAgent(userAgent);
+                        var deviceInfo = parseUserAgent();
                         expect(deviceInfo.os).toBe(os);
                     });
                     it("should detect os version = " + os_version, function () {
-                        var deviceInfo = uaDeviceDetector.parseUserAgent(userAgent);
+                        var deviceInfo = parseUserAgent();
                         expect(deviceInfo.os_version).toBe(os_version);
                     });
                     it("should detect browser = " + browser, function () {
-                        var deviceInfo = uaDeviceDetector.parseUserAgent(userAgent);
+                        var deviceInfo = parseUserAgent();
                         expect(deviceInfo.browser).toBe(browser);
                     });
                     it("should detect browser version= " + browser_version, function () {
-                        var deviceInfo = uaDeviceDetector.parseUserAgent(userAgent);
+                        var deviceInfo = parseUserAgent();
                         expect(deviceInfo.browser_version).toBe(browser_version);
                     });
                     it("should detect device = " + device, function () {
-                        var deviceInfo = uaDeviceDetector.parseUserAgent(userAgent);
+                        var deviceInfo = parseUserAgent();
                         expect(deviceInfo.device).toBe(device);
                     });
                     it("should have isMobile = " + isMobile, function () {
-                        var deviceInfo = uaDeviceDetector.parseUserAgent(userAgent);
+                        var deviceInfo = parseUserAgent();
                         expect(deviceInfo.isMobile()).toBe(isMobile);
                     });
                     it("should have isTablet = " + isTablet, function () {
-                        var deviceInfo = uaDeviceDetector.parseUserAgent(userAgent);
+                        var deviceInfo = parseUserAgent();
                         expect(deviceInfo.isTablet()).toBe(isTablet);
                     });
                     it("should have isDesktop = " + isDesktop, function () {
-                        var deviceInfo = uaDeviceDetector.parseUserAgent(userAgent);
+                        var deviceInfo = parseUserAgent();
                         expect(deviceInfo.isDesktop()).toBe(isDesktop);
                     });
                     if (!!extras) {
